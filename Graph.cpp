@@ -1,6 +1,5 @@
 //written by Ido Avraham : 208699181
 //EMAIL: idoavraham086@gmail.com
-#include <ntdef.h>
 #include "Graph.hpp"
 namespace ariel {
 

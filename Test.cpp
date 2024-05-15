@@ -4,6 +4,7 @@
 
 using namespace std;
 
+
 TEST_CASE("Graph subtraction"){
     // test the binary "-"
     ariel::Graph g1;

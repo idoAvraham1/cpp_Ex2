@@ -31,7 +31,7 @@ namespace ariel {
             // run bellman-ford on the new graph from the new vertex
             return bellmanFord(new_Graph, new_Graph.V() - 1);
 
-       }
+        }
 
         // for undirected graph run bellman-ford from each vertex
         else {
