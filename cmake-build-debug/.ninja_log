@@ -1,0 +1,16 @@
+# ninja log v5
+40	4480	7374736301840697	CMakeFiles/cpp_Ex2.dir/Algorithms.cpp.obj	5e1ba168867a02b0
+10	1374	7374906257777395	CMakeFiles/cpp_Ex2.dir/main.cpp.obj	8e0c2c0ec9582244
+17	1388	7374906257936013	CMakeFiles/cpp_Ex2.dir/Graph.cpp.obj	4f90842284f935
+54	4507	7374736302240632	CMakeFiles/cpp_Ex2.dir/DetectCycle.cpp.obj	a5718cdebd4ea6dd
+4388	6207	7374736319223197	CMakeFiles/cpp_Ex2.dir/ShortestPath.cpp.obj	c401055dcde7b383
+4351	5694	7374736314123770	CMakeFiles/cpp_Ex2.dir/IsConnected.cpp.obj	3433d636ff312457
+68	4595	7374736303117261	CMakeFiles/cpp_Ex2.dir/DetectNegativeCycle.cpp.obj	650774e090fbecce
+99	4445	7374736301576458	CMakeFiles/cpp_Ex2.dir/IsBipartite.cpp.obj	e60acdf71ebcf0de
+4446	6610	7374736323263662	CMakeFiles/cpp_Ex2.dir/Test.cpp.obj	c74c576a67b5a0e7
+1488	6810	7373174273715783	CMakeFiles/cpp_Ex2.dir/TestCounter.cpp.obj	a7bedd65f83ed2ec
+1389	3135	7374906275278811	cpp_Ex2.exe	a6dbd662a2549a01
+6	997	7374907047079280	CMakeFiles/cpp_Ex2.dir/Graph.cpp.obj	4f90842284f935
+998	2915	7374907065973560	cpp_Ex2.exe	a6dbd662a2549a01
+7	984	7374907224620120	CMakeFiles/cpp_Ex2.dir/main.cpp.obj	8e0c2c0ec9582244
+985	2390	7374907238591684	cpp_Ex2.exe	a6dbd662a2549a01
