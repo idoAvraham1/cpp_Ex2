@@ -31,9 +31,6 @@ namespace ariel {
     public:
         Graph();
         Graph(const Graph& other);
-        void setWeight(int weight , size_t i , size_t j){
-            adjacencyMatrix[i][j]=weight;
-        }
 
         // graph methods
         void loadGraph(const std::vector<std::vector<int>>& matrix);

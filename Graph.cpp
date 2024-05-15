@@ -95,7 +95,16 @@ namespace ariel {
     }
 
     void Graph::printGraph() const {
-        std::cout << "Graph with " << numVertices << " vertices and " << numEdges << " edges." << std::endl;
+        for (const auto& row : adjacencyMatrix) {
+            std::cout << "[";
+            for (size_t i = 0; i < row.size(); ++i) {
+                std::cout << row[i];
+                if (i < row.size() - 1) {
+                    std::cout << ", ";
+                }
+            }
+            std::cout << "]" << std::endl;
+        }
     }
 
     
@@ -199,7 +208,8 @@ namespace ariel {
 
         for(size_t i=0; i<other.numVertices; i++){
             for(size_t j=0; j<other.numVertices; j++){
-                if( other.adjacencyMatrix[i][j] != 0 && this->adjacencyMatrix[i][j] != other.adjacencyMatrix[i][j] )
+                if( other.adjacencyMatrix[i][j] != 0 && this->adjacencyMatrix[i][j]
+                        != other.adjacencyMatrix[i][j] )
                         return false;
             }
         }
