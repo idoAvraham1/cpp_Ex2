@@ -94,17 +94,21 @@ namespace ariel {
         return true;
     }
 
-    void Graph::printGraph() const {
-        for (const auto& row : adjacencyMatrix) {
-            std::cout << "[";
-            for (size_t i = 0; i < row.size(); ++i) {
-                std::cout << row[i];
-                if (i < row.size() - 1) {
-                    std::cout << ", ";
-                }
+    std::string Graph::printGraph() const {
+        std::string ans;
+        for (size_t i=0; i<numVertices; i++) {
+            ans += "[";
+            for (size_t j = 0; j <numVertices; ++j) {
+                ans += std::to_string(adjacencyMatrix[i][j]);
+                if (j < numVertices - 1)
+                    ans += ", ";
             }
-            std::cout << "]" << std::endl;
+            ans += "]";
+            if (i < numVertices - 1) {
+                ans += "\n";
+            }
         }
+        return ans;
     }
 
     
@@ -173,7 +177,7 @@ namespace ariel {
         }
 
         // assign max value possible for each new outgoing edge
-        int outgoingEdgeWeight = 10000;
+        int outgoingEdgeWeight = MAX_WEIGHT;
 
         // For directed graphs, add outgoing edges from the new vertex to each existing vertex
         for (size_t i = 0; i < numVertices; ++i) {
@@ -201,7 +205,7 @@ namespace ariel {
         return numVertices<=0;
     }
 
-    // returns true if this contains other
+    // returns true if "this" contains the other graphs
     bool Graph::contains(const Graph& other) const {
         if(other.numVertices > this->numVertices)
             return false;
@@ -236,14 +240,16 @@ namespace ariel {
     // arithmetic operators
     // +
     Graph Graph::operator+(const Graph &other) const {
-
+        // Check if the graphs have different dimensions
         if( this->numVertices != other.numVertices || adjacencyMatrix.size() != other.adjacencyMatrix.size())
                  throw std::invalid_argument("Graphs have different dimensions");
 
+        // new adjacency matrix to apply changes may occur in the graph
          std::vector<std::vector<int>> resAdjacencyMatrix(numVertices, std::vector<int>(numVertices));
 
         for (size_t i = 0; i < numVertices; ++i) {
             for (size_t j = 0; j < numVertices; ++j) {
+                // add corresponding elements of the adjacency matrices
                 resAdjacencyMatrix[i][j] = adjacencyMatrix[i][j] + other.adjacencyMatrix[i][j];
             }
         }
@@ -255,13 +261,16 @@ namespace ariel {
     }
 
     Graph& Graph::operator+=(const Graph &other)  {
+        // Check if the graphs have different dimensions
         if (numVertices != other.numVertices || adjacencyMatrix.size() != other.adjacencyMatrix.size()) {
             throw std::invalid_argument("Graphs have different dimensions");
         }
+        // new adjacency matrix to apply changes may occur in the graph
         std::vector<std::vector<int>> newAdjacencyMatrix(numVertices, std::vector<int>(numVertices));
 
         for (size_t i = 0; i < numVertices; ++i) {
             for (size_t j = 0; j < numVertices; ++j) {
+                // add corresponding elements of the adjacency matrices
                 newAdjacencyMatrix[i][j] = adjacencyMatrix[i][j] + other.adjacencyMatrix[i][j];
             }
         }
@@ -270,13 +279,16 @@ namespace ariel {
     }
     // -
     Graph Graph::operator-(const Graph &other) const {
+             // Check if the graphs have different dimensions
              if( this->numVertices != other.numVertices || adjacencyMatrix.size() != other.adjacencyMatrix.size())
                  throw std::invalid_argument("Graphs have different dimensions");
 
+             // new adjacency matrix to apply changes may occur in the graph
              std::vector<std::vector<int>> resAdjacencyMatrix(numVertices, std::vector<int>(numVertices));
 
              for (size_t i = 0; i < numVertices; ++i) {
                  for (size_t j = 0; j < numVertices; ++j) {
+                     // Subtract corresponding elements of the adjacency matrices
                      resAdjacencyMatrix[i][j] = adjacencyMatrix[i][j] - other.adjacencyMatrix[i][j];
                  }
              }
@@ -291,9 +303,11 @@ namespace ariel {
         if (numVertices != other.numVertices || adjacencyMatrix.size() != other.adjacencyMatrix.size()) {
             throw std::invalid_argument("Graphs have different dimensions");
         }
+
         std::vector<std::vector<int>> newAdjacencyMatrix(numVertices, std::vector<int>(numVertices));
         for (size_t i = 0; i < numVertices; ++i) {
             for (size_t j = 0; j < numVertices; ++j) {
+                // Subtract corresponding elements of the adjacency matrices
                 newAdjacencyMatrix[i][j] = adjacencyMatrix[i][j] - other.adjacencyMatrix[i][j];
             }
         }
@@ -377,12 +391,15 @@ namespace ariel {
     // multiplication operators
     // matrix multiply
     Graph Graph::operator*(Graph &other) const {
-        if (numVertices != other.numVertices || adjacencyMatrix.size() != other.adjacencyMatrix.size()) {
-            throw std::invalid_argument("Graphs have different dimensions");
+
+        // check for a valid input
+        if (adjacencyMatrix[0].size() != other.adjacencyMatrix.size()) {
+            throw std::invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
         }
 
        std::vector<std::vector<int>> newAdjacencyMatrix(numVertices, std::vector<int>(numVertices));
 
+        // matrix multiply
         for (size_t i = 0; i < numVertices; ++i) {
             for (size_t j = 0; j < numVertices; ++j) {
                 int sum = 0;
@@ -392,19 +409,24 @@ namespace ariel {
                 newAdjacencyMatrix[i][j] = sum;
             }
         }
+        // zero the diagonal elements
+        for(size_t i = 0; i < numVertices; ++i)
+            newAdjacencyMatrix[i][i]=0;
+
         Graph result;
         result.loadGraph(newAdjacencyMatrix);
         return result;
     }
 
     Graph& Graph::operator*=(Graph& other)  {
-
-        if (numVertices != other.numVertices || adjacencyMatrix.size() != other.adjacencyMatrix.size()) {
-            throw std::invalid_argument("Graphs have different dimensions");
+        // check for a valid input
+        if (adjacencyMatrix.size() != other.adjacencyMatrix[0].size()) {
+            throw std::invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
         }
 
         std::vector<std::vector<int>> newAdjacencyMatrix(numVertices, std::vector<int>(numVertices));
 
+        // matrix multiply
         for (size_t i = 0; i < numVertices; ++i) {
             for (size_t j = 0; j < numVertices; ++j) {
                 int sum = 0;
@@ -414,6 +436,10 @@ namespace ariel {
                 newAdjacencyMatrix[i][j] = sum;
             }
         }
+
+        // zero the diagonal elements
+        for(size_t i = 0; i < numVertices; ++i)
+            newAdjacencyMatrix[i][i]=0;
 
         this->loadGraph(newAdjacencyMatrix);
         return *this;

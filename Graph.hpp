@@ -13,7 +13,7 @@
 /**
  * A class to represent a graph with adjacency matrix
  */
-
+#define MAX_WEIGHT 1000
 namespace ariel {
     class Graph {
     private:
@@ -34,7 +34,7 @@ namespace ariel {
 
         // graph methods
         void loadGraph(const std::vector<std::vector<int>>& matrix);
-        void printGraph() const;
+        [[nodiscard]] std::string printGraph() const;
         [[nodiscard]] bool contains(const Graph& other) const;
         [[nodiscard]] bool isEmpty() const;
 
