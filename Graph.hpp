@@ -58,7 +58,7 @@ namespace ariel {
 
         //-
         Graph operator-(const Graph& other) const; // binary +
-        Graph& operator-(); // unary +
+        Graph& operator-(); // unary -
         Graph& operator-=(const Graph& other);
 
         // comparing operators
@@ -72,8 +72,8 @@ namespace ariel {
         bool operator>=(const Graph& other) const;
 
         //multiply operators
-        Graph operator*(int scalar) const;
-        Graph& operator*=(int scalar);
+        Graph operator*(const double scalar) const;
+        Graph& operator*=(const double scalar);
 
         Graph operator*(Graph& other) const;
         Graph& operator*=(Graph& other);

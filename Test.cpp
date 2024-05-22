@@ -3,7 +3,98 @@
 #include "Graph.hpp"
 
 using namespace std;
+TEST_CASE("Tests Algorithms") {
+    ariel::Graph g1;
+    // connected graph 
+    vector<vector<int>> graph1 = {
+            {0, 1, 0},
+            {1, 0, 1},
+            {0, 1, 0}};
+    g1.loadGraph(graph1);
 
+    CHECK(ariel::Algorithms::shortestPath(g1,0,2) == "Shortest path from 0 to 2 is: 0->1->2");
+
+
+    ariel::Graph g2;
+    vector<vector<int>> graph2 = {
+            {0, -1, 0},
+            {-1, 0, 1},
+            {0, 1, 0}};
+    g2.loadGraph(graph2);
+
+     // disconnect g1 with addition to g2 
+     g1 += g2;
+     CHECK(ariel::Algorithms::isConnected(g1)== false);
+     // now there is no path from 0 to 2 
+     CHECK(ariel::Algorithms::shortestPath(g1,0,2) == "There is no path from 0 to 2");
+
+     // no shortest path from 0 to 4 
+     vector<vector<int>> graph9 = {
+                {0, 9, 0, 2, 0},
+                {9, 0, 3, 0, 0},
+                {0, 3, 0, 0, 0},
+                {2, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0}
+        };
+        g1.loadGraph(graph9);
+        CHECK(ariel::Algorithms::shortestPath(g1, 0, 4) == "There is no path from 0 to 4");
+
+     // let g2 be a graph such that in addition with g1 a path will exist from 0 to 4 
+     vector<vector<int>> graph10 = {
+                {0, 9, 0, 2, 0},
+                {9, 0, 3, 0, 0},
+                {0, 3, 0, 0, 4},
+                {2, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0}
+        };   
+        g2.loadGraph(graph10);
+
+        ariel::Graph g5 = g1+g2;  
+        // now we have shortest path from 0 to 4 
+         CHECK(ariel::Algorithms::shortestPath(g5,0,4) == "Shortest path from 0 to 4 is: 0->1->2->4");   
+
+
+     // let g1 be a graph with some negative cycle 
+      vector<vector<int>> graph3={
+        {0, 1, 0, 0, 0},
+        {0, 0, -5, 0, 0},
+        {2, 0, 0, 0, 0},
+        {0, 0, 0, 0, 2},
+        {0, 0, 0, 0, 0}};
+    g1.loadGraph(graph3);
+    CHECK(ariel::Algorithms::negativeCycle(g1) == "Negative cycle found: 0 -> 1 -> 2 -> 0");
+    // perform ++ 5 times on g1 to eliminate the negative cycle 
+    for(size_t i=0; i<5 ; i++){
+        g1++;
+    }
+    CHECK(ariel::Algorithms::negativeCycle(g1) == "No negative cycle detected in the graph");
+ 
+    // let g1 be a a graph without cycles
+    vector<vector<int>> graph4 = {
+                {0, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {2, 0, 0, 0, 0},
+                {0, 0, 0, 0, 2},
+                {0, 0, 0, 0, 0}
+        };
+     g1.loadGraph(graph4);
+     CHECK(ariel::Algorithms::isContainsCycle(g1) == "No cycle found");
+
+      // add a graph such that addition with g1 will cause a cycle 
+      vector<vector<int>> graph5 = {
+                {0, 1, 0, 0, 0},
+                {0, 0, 1, 0, 0},
+                {2, 0, 0, 0, 0},
+                {0, 0, 0, 0, 2},
+                {0, 0, 0, 0, 0}
+        };
+        g2.loadGraph(graph5);
+        
+        // now g3 contains a cycle 
+         ariel::Graph g3 = g1+g2;
+         CHECK(ariel::Algorithms::isContainsCycle(g3) == "Cycle found: 0->1->2->0");
+
+}
 
 TEST_CASE("Graph subtraction"){
     // test the binary "-"

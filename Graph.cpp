@@ -445,7 +445,7 @@ namespace ariel {
     }
 
     // scalar multiply
-    Graph Graph::operator*(int scalar) const {
+    Graph Graph::operator*(const double scalar) const {
         if(this->isEmpty())
             throw std::invalid_argument("Graph is empty");
 
@@ -463,7 +463,7 @@ namespace ariel {
 
     }
 
-    Graph& Graph::operator*=(int scalar) {
+    Graph& Graph::operator*=(const double scalar) {
         if( this->isEmpty())
             throw std::invalid_argument("Graph is empty");
 

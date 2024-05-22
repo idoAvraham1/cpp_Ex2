@@ -35,10 +35,10 @@ int main()
     ariel::Graph g3 = g1 + g2; // Add the two graphs together.
     cout<<g3<<endl;           // Should print the matrix of the graph: [0, 2, 1], [2, 0, 3], [1, 3, 0]
 
-    g1 *= -2;        // Multiply the graph by -2.
+    g1 *= -2;        // Multiply the graph by -0.5.
     cout<<g1<<endl; // Should print the matrix of the graph: [0, -2, 0], [-2, 0, -2], [0, -2, 0]
 
-    g1 *= -2;
+    g1 *= -0.5;
     ariel::Graph g4 = g1 * g2; // Multiply the two graphs together.
     cout<<g4<<endl;           // Should print the multiplication of the matrices of g1 and g2: [0, 0, 2], [1, 0, 1], [1, 0, 0]
 
